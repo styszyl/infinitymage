@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Infinity Mage Reader</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg"></div>
+  <header class="topbar">
+    <div class="brand">Infinity Mage Reader</div>
+    <div class="controls">
+      <button id="prevBtn" class="btn" title="Poprzedni rozdział">⟵</button>
+      <select id="chapterSelect" class="select"></select>
+      <button id="nextBtn" class="btn" title="Następny rozdział">⟶</button>
+    </div>
+    <div class="controls">
+      <label class="range">
+        <span>Rozmiar</span>
+        <input id="fontSize" type="range" min="16" max="28" step="1" />
+      </label>
+      <label class="range">
+        <span>Interlinia</span>
+        <input id="lineHeight" type="range" min="1.2" max="2.0" step="0.05" />
+      </label>
+      <label class="range">
+        <span>Szerokość</span>
+        <input id="contentWidth" type="range" min="560" max="980" step="20" />
+      </label>
+      <select id="themeSelect" class="select" title="Motyw">
+        <option value="sepia">Sepia</option>
+        <option value="light">Jasny</option>
+        <option value="dark">Ciemny</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="reader">
+    <article class="page" id="page">
+      <h1 id="chapterTitle">Ładowanie…</h1>
+      <div id="chapterText" class="text"></div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div id="status">Gotowe</div>
+    <div class="hint">Skróty: ← / → (rozdziały), [ / ] (rozmiar), { / } (interlinia)</div>
+  </footer>
+
+  <script src="reader.js"></script>
+</body>
+</html>
