@@ -4,15 +4,22 @@ const chapterText = document.getElementById('chapterText');
 const statusEl = document.getElementById('status');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
+const bottomPrev = document.getElementById('bottomPrev');
+const bottomNext = document.getElementById('bottomNext');
+const readToggle = document.getElementById('readToggle');
+const markAllRead = document.getElementById('markAllRead');
+const clearAllRead = document.getElementById('clearAllRead');
 const fontSize = document.getElementById('fontSize');
 const lineHeight = document.getElementById('lineHeight');
 const contentWidth = document.getElementById('contentWidth');
 const themeSelect = document.getElementById('themeSelect');
 
 const SETTINGS_KEY = 'im_reader_settings_v1';
+const READ_KEY = 'im_reader_read_v1';
 
 let chapters = [];
 let currentIndex = 0;
+let readMap = {};
 
 function setStatus(msg) {
   statusEl.textContent = msg;
@@ -55,9 +62,75 @@ function buildSelect() {
     const opt = document.createElement('option');
     opt.value = i;
     const title = ch.title ? ` - ${ch.title}` : '';
-    opt.textContent = `Chapter ${ch.num}${title}`;
+    const readMark = readMap[ch.num] ? ' ✓' : '';
+    opt.textContent = `Chapter ${ch.num}${title}${readMark}`;
     chapterSelect.appendChild(opt);
   }
+  if (Number.isFinite(currentIndex)) {
+    chapterSelect.value = String(currentIndex);
+  }
+}
+
+function loadReadMap() {
+  try {
+    const raw = localStorage.getItem(READ_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw) || {};
+  } catch {
+    return {};
+  }
+}
+
+function saveReadMap() {
+  localStorage.setItem(READ_KEY, JSON.stringify(readMap));
+}
+
+function updateReadToggle() {
+  const ch = chapters[currentIndex];
+  if (!ch) return;
+  readToggle.checked = !!readMap[ch.num];
+}
+
+function markRead(num, value) {
+  if (value) readMap[num] = true;
+  else delete readMap[num];
+  saveReadMap();
+  buildSelect();
+  updateReadToggle();
+}
+
+function escapeHtml(s) {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function formatText(raw) {
+  const lines = raw.split('\n');
+
+  const htmlLines = lines.map((line, idx) => {
+    const re = /“[^”]+”|\"[^\"]+\"/g;
+    let out = '';
+    let last = 0;
+    let m;
+    while ((m = re.exec(line)) !== null) {
+      const qIdx = m.index;
+      const qLen = m[0].length;
+      out += escapeHtml(line.slice(last, qIdx));
+      const quote = m[0];
+      const open = quote[0];
+      const close = quote[quote.length - 1];
+      const inner = quote.slice(1, -1);
+      const content = escapeHtml(inner);
+      out += `${open}<strong class="quote">${content}</strong>${close}`;
+      last = qIdx + qLen;
+    }
+    out += escapeHtml(line.slice(last));
+    return out;
+  });
+
+  return htmlLines.join('<br>');
 }
 
 async function loadChapter(index, updateSelect = true) {
@@ -71,8 +144,9 @@ async function loadChapter(index, updateSelect = true) {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const text = await res.text();
     chapterTitle.textContent = `Chapter ${ch.num}` + (ch.title ? ` - ${ch.title}` : '');
-    chapterText.textContent = text.trim();
+    chapterText.innerHTML = formatText(text.trim());
     setStatus(`Gotowe: Chapter ${ch.num}`);
+    updateReadToggle();
     updateUrlHash();
   } catch (err) {
     chapterTitle.textContent = 'Błąd ładowania';
@@ -98,7 +172,26 @@ function getIndexFromHash() {
 function wireControls() {
   prevBtn.addEventListener('click', () => loadChapter(currentIndex - 1));
   nextBtn.addEventListener('click', () => loadChapter(currentIndex + 1));
+  if (bottomPrev) bottomPrev.addEventListener('click', () => loadChapter(currentIndex - 1));
+  if (bottomNext) bottomNext.addEventListener('click', () => loadChapter(currentIndex + 1));
   chapterSelect.addEventListener('change', (e) => loadChapter(parseInt(e.target.value, 10)));
+  readToggle.addEventListener('change', () => {
+    const ch = chapters[currentIndex];
+    if (!ch) return;
+    markRead(ch.num, readToggle.checked);
+  });
+  markAllRead.addEventListener('click', () => {
+    for (const ch of chapters) readMap[ch.num] = true;
+    saveReadMap();
+    buildSelect();
+    updateReadToggle();
+  });
+  clearAllRead.addEventListener('click', () => {
+    readMap = {};
+    saveReadMap();
+    buildSelect();
+    updateReadToggle();
+  });
 
   const settings = loadSettings();
   applySettings(settings);
@@ -160,6 +253,7 @@ async function init() {
     const res = await fetch('chapters.json');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     chapters = await res.json();
+    readMap = loadReadMap();
     buildSelect();
     wireControls();
     const startIndex = getIndexFromHash();

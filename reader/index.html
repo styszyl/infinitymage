@@ -16,6 +16,12 @@
       <button id="nextBtn" class="btn" title="Następny rozdział">⟶</button>
     </div>
     <div class="controls">
+      <label class="toggle">
+        <input id="readToggle" type="checkbox" />
+        <span>Przeczytane</span>
+      </label>
+      <button id="markAllRead" class="btn" title="Oznacz wszystko jako przeczytane">Wszystkie ✓</button>
+      <button id="clearAllRead" class="btn" title="Wyczyść wszystkie oznaczenia">Wyczyść</button>
       <label class="range">
         <span>Rozmiar</span>
         <input id="fontSize" type="range" min="16" max="28" step="1" />
@@ -46,7 +52,11 @@
   <footer class="footer">
     <div id="status">Gotowe</div>
     <div class="hint">Skróty: ← / → (rozdziały), [ / ] (rozmiar), { / } (interlinia)</div>
-  </footer>
+    <div class="bottom-nav" id="bottomNav">
+    <button id="bottomPrev" class="btn" title="Poprzedni rozdział">⟵ Poprzedni</button>
+    <button id="bottomNext" class="btn" title="Następny rozdział">Następny ⟶</button>
+  </div>
+</footer>
 
   <script src="reader.js"></script>
 </body>

@@ -62,6 +62,23 @@ body {
   border-radius: 10px;
 }
 
+.toggle {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 6px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.toggle input {
+  accent-color: var(--accent);
+}
+
 .btn {
   border: 1px solid rgba(0,0,0,0.15);
   background: #fff;
@@ -92,7 +109,7 @@ body {
 .reader {
   display: flex;
   justify-content: center;
-  padding: 30px 16px 60px;
+  padding: 24px 16px 60px;
 }
 
 .page {
@@ -112,6 +129,15 @@ body {
 
 .text {
   white-space: pre-wrap;
+}
+
+.quote {
+  font-weight: 700;
+}
+
+body[data-theme="dark"] .quote {
+  color: #f7d9a6;
+  text-shadow: 0 0 6px rgba(242, 182, 109, 0.25);
 }
 
 .footer {
@@ -156,11 +182,87 @@ body[data-theme="dark"] .select {
   border-color: rgba(255,255,255,0.08);
 }
 
+body[data-theme="dark"] .toggle {
+  background: #111827;
+  color: var(--ink);
+  border-color: rgba(255,255,255,0.08);
+}
+
 @media (max-width: 900px) {
   .topbar {
     grid-template-columns: 1fr;
   }
   .footer {
     flex-direction: column;
+  }
+}
+
+
+@media (max-width: 640px) {
+  :root {
+    --content-width: 100%;
+    --font-size: 18px;
+  }
+
+  .topbar {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .brand {
+    font-size: 0.95rem;
+  }
+
+  .controls {
+    gap: 6px;
+  }
+
+  .btn, .select {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+
+  .range {
+    font-size: 0.75rem;
+  }
+
+  input[type="range"] {
+    width: 120px;
+  }
+
+  .reader {
+    padding: 16px 10px 40px;
+  }
+
+  .page {
+    padding: 18px 16px 24px;
+    border-radius: 14px;
+  }
+
+  .page h1 {
+    font-size: 1.2em;
+  }
+
+  .footer {
+    padding: 10px 12px 16px;
+    font-size: 0.78rem;
+  }
+}
+
+
+.bottom-nav {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 20px 30px;
+}
+
+@media (max-width: 640px) {
+  .bottom-nav {
+    padding: 0 12px 24px;
+    gap: 8px;
+  }
+  .bottom-nav .btn {
+    flex: 1;
   }
 }
