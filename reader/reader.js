@@ -13,6 +13,7 @@ const fontSize = document.getElementById('fontSize');
 const lineHeight = document.getElementById('lineHeight');
 const contentWidth = document.getElementById('contentWidth');
 const themeSelect = document.getElementById('themeSelect');
+const languageSelect = document.getElementById('languageSelect');
 
 const SETTINGS_KEY = 'im_reader_settings_v1';
 const READ_KEY = 'im_reader_read_v1';
@@ -20,6 +21,33 @@ const READ_KEY = 'im_reader_read_v1';
 let chapters = [];
 let currentIndex = 0;
 let readMap = {};
+let currentLanguage = 'en';
+let chaptersBasePath = '../';
+
+const LANGUAGES = {
+  en: {
+    label: 'English',
+    chaptersFile: 'chapters.json',
+    basePath: '../',
+    chapterLabel: 'Chapter'
+  },
+  pl: {
+    label: 'Polski',
+    chaptersFile: 'chapters_pl.json',
+    basePath: '../pl/',
+    chapterLabel: 'Rozdział'
+  },
+  ko: {
+    label: 'Korean',
+    chaptersFile: 'chapters_ko.json',
+    basePath: '../Infinity Mage Chapters 1-1277 original/',
+    chapterLabel: 'Chapter'
+  }
+};
+
+function getLanguageConfig(lang) {
+  return LANGUAGES[lang] || LANGUAGES.en;
+}
 
 function setStatus(msg) {
   statusEl.textContent = msg;
@@ -41,7 +69,8 @@ function loadSettings() {
     fontSize: 20,
     lineHeight: 1.6,
     contentWidth: 760,
-    theme: 'sepia'
+    theme: 'sepia',
+    language: 'en'
   };
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -58,12 +87,13 @@ function saveSettings(settings) {
 
 function buildSelect() {
   chapterSelect.innerHTML = '';
+  const chapterLabel = getLanguageConfig(currentLanguage).chapterLabel;
   for (const [i, ch] of chapters.entries()) {
     const opt = document.createElement('option');
     opt.value = i;
     const title = ch.title ? ` - ${ch.title}` : '';
     const readMark = readMap[ch.num] ? ' ✓' : '';
-    opt.textContent = `Chapter ${ch.num}${title}${readMark}`;
+    opt.textContent = `${chapterLabel} ${ch.num}${title}${readMark}`;
     chapterSelect.appendChild(opt);
   }
   if (Number.isFinite(currentIndex)) {
@@ -138,14 +168,15 @@ async function loadChapter(index, updateSelect = true) {
   currentIndex = index;
   const ch = chapters[index];
   if (updateSelect) chapterSelect.value = String(index);
-  setStatus(`Ładowanie: Chapter ${ch.num}...`);
+  const chapterLabel = getLanguageConfig(currentLanguage).chapterLabel;
+  setStatus(`Ładowanie: ${chapterLabel} ${ch.num}...`);
   try {
-    const res = await fetch('../' + ch.file);
+    const res = await fetch(encodeURI(chaptersBasePath + ch.file));
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const text = await res.text();
-    chapterTitle.textContent = `Chapter ${ch.num}` + (ch.title ? ` - ${ch.title}` : '');
+    chapterTitle.textContent = `${chapterLabel} ${ch.num}` + (ch.title ? ` - ${ch.title}` : '');
     chapterText.innerHTML = formatText(text.trim());
-    setStatus(`Gotowe: Chapter ${ch.num}`);
+    setStatus(`Gotowe: ${chapterLabel} ${ch.num}`);
     updateReadToggle();
     updateUrlHash();
   } catch (err) {
@@ -220,6 +251,18 @@ function wireControls() {
     saveSettings(settings);
   });
 
+  if (languageSelect) {
+    languageSelect.addEventListener('change', async () => {
+      settings.language = languageSelect.value;
+      saveSettings(settings);
+      try {
+        await loadLanguage(settings.language, true);
+      } catch (err) {
+        setStatus('Błąd: ' + err.message);
+      }
+    });
+  }
+
   window.addEventListener('keydown', (e) => {
     if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT')) return;
     if (e.key === 'ArrowLeft') loadChapter(currentIndex - 1);
@@ -247,17 +290,52 @@ function wireControls() {
   });
 }
 
-async function init() {
+function populateLanguageSelect() {
+  if (!languageSelect) return;
+  languageSelect.innerHTML = '';
+  for (const [key, cfg] of Object.entries(LANGUAGES)) {
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = cfg.label;
+    languageSelect.appendChild(opt);
+  }
+}
+
+async function loadLanguage(lang, keepChapter = true) {
+  const cfg = getLanguageConfig(lang);
+  currentLanguage = lang;
+  chaptersBasePath = cfg.basePath;
   setStatus('Wczytywanie listy rozdziałów...');
+  const res = await fetch(cfg.chaptersFile);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const nextChapters = await res.json();
+  let targetNum = null;
+  if (keepChapter) {
+    const current = chapters[currentIndex];
+    if (current) targetNum = current.num;
+  }
+  chapters = nextChapters;
+  readMap = loadReadMap();
+  buildSelect();
+  if (languageSelect) languageSelect.value = lang;
+  let idx = 0;
+  if (targetNum !== null) {
+    const found = chapters.findIndex(c => c.num === targetNum);
+    if (found >= 0) idx = found;
+  }
+  currentIndex = idx;
+  await loadChapter(idx);
+}
+
+async function init() {
   try {
-    const res = await fetch('chapters.json');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    chapters = await res.json();
-    readMap = loadReadMap();
-    buildSelect();
+    const settings = loadSettings();
+    applySettings(settings);
+    populateLanguageSelect();
     wireControls();
+    await loadLanguage(settings.language || 'en', false);
     const startIndex = getIndexFromHash();
-    await loadChapter(startIndex);
+    if (startIndex !== currentIndex) await loadChapter(startIndex);
   } catch (err) {
     chapterTitle.textContent = 'Błąd inicjalizacji';
     chapterText.textContent = 'Nie udało się wczytać listy rozdziałów.';
