@@ -1,5 +1,4 @@
 [321] Chwilowe Pęknięcie (3)
-[321] Chwila pęknięcia (3)
 Sirone leżał na łóżku, delektując się chwilą spokoju.
 W następnym semestrze wchodził do klasy dyplomowej, więc ocenę z praktyk mógł sobie odpuścić. Z drugiej strony oznaczało to, że te ferie były ostatnim momentem na doszlifowanie podstaw. Dlatego Iruki i Nade też zrezygnowali z zabawy i od razu wrócili do rodów.
 “Na razie muszę odpocząć.”
@@ -12,7 +11,7 @@ Wszyscy uczniowie szkoły magii dawali z siebie wszystko, ale to Sirone miał sz
 Dzięki walkom na granicy życia i śmierci stał się silniejszy. Szczerze mówiąc, czuł, że nawet w klasie dyplomowej nie da się łatwo zepchnąć.
 Sirone wstał z łóżka i podszedł do <Miecz demoniczny Armand>. Sam widok, jak stoi wyprostowany bez podpórki, sprawiał mu satysfakcję.
 Dzięki sterowaniu znamionowemu nie było problemu z noszeniem go przy sobie. Ale podczas nauki w szkole nie będzie okazji, by użyć tego miecza.
-Kiedy zdjął pochwę Armana, wzdłuż klingi wydostał się czysty, wysokotonowy dźwięk. Była krótsza niż długi miecz, ale wystarczająco ostra do walki i dobrze wyważona.
+Kiedy zdjął pochwę Armanda, wzdłuż klingi wydostał się czysty, wysokotonowy dźwięk. Była krótsza niż długi miecz, ale wystarczająco ostra do walki i dobrze wyważona.
 ‘Czemu tak cicho? Nie mówcie, że zdechł?’
 Gdy co noc wysyłał fale psychiczne, odpowiadał bez przerwy, a odkąd wrócił do domu, panowała cisza. Reakcja była tak słaba, że zaczął się zastanawiać, czy umowa nie została rozwiązana, nie wiedzieć kiedy.
 Od czasu, gdy pokazał go przyjaciołom, nie uruchamiał diamentowej zbroi. Nie było takiej potrzeby, ale z jakiegoś powodu czuł się przy tym niezręcznie.
@@ -44,8 +43,8 @@ Vincent, wychodząc i zamykając drzwi, rzucił jeszcze jedno.
 Sirone, poczuwszy gorąco na twarzy, opuścił głowę.
 Dopiero gdy usłyszał trzask zamkniętych drzwi, zdjął kaptur i chwycił się za głowę.
 “Aa! Ale wstyd! Pierwszy raz to zrobiłem!”
-Uznawszy, że takie rzeczy, które do niego nie pasują, ściągają kłopoty, Sirone odwołał Armana. Włókna i kryształowe kule zostały wessane, a wszystko wróciło do postaci demonicznego miecza.
-Wsunął go do pochwy sterowaniem znamionowym, odłożył Armana w kąt i zszedł na parter.
+Uznawszy, że takie rzeczy, które do niego nie pasują, ściągają kłopoty, Sirone odwołał Armanda. Włókna i kryształowe kule zostały wessane, a wszystko wróciło do postaci demonicznego miecza.
+Wsunął go do pochwy sterowaniem znamionowym, odłożył Armanda w kąt i zszedł na parter.
 Zapach zupy na stole rozgrzał mu żołądek. Nagle głodny Sirone usiadł i najpierw chwycił łyżkę. Olina uśmiechnęła się i nalała mu zupy na talerz.
 “Głodny? Jedz.”
 “Tak. Smacznego!”
@@ -82,13 +81,15 @@ Armand nie odpuścił i dalej wysyłał fale psychiczne.
 To właśnie duma czyni świadomość trudną. Nie wiadomo, ilu miał właścicieli, ale najwyraźniej nie pojmował, czemu po zawarciu kontraktu ktoś go nie nosi.
 Gdy był własnością Ziona, być może pogodził się z losem. Czy to nie dlatego, nawet mając właściciela, wysyłał kuszące sygnały?
 ‘Jak tak pomyślę, trochę mi go żal. Nie dbam o niego bardziej niż poprzedni właściciel.’
-Sirone, jakby nie miał wyjścia, podszedł do Armana.
-Szczerze mówiąc, noszenie Armana przy sobie dawało poczucie bezpieczeństwa w każdej sytuacji. Nawet jeśli trafiłby na kontrolę, miał sterowanie znamionowe i mógł go po prostu ukryć gdzie indziej.
+Sirone, jakby nie miał wyjścia, podszedł do Armanda.
+Szczerze mówiąc, noszenie Armanda przy sobie dawało poczucie bezpieczeństwa w każdej sytuacji. Nawet jeśli trafiłby na kontrolę, miał sterowanie znamionowe i mógł go po prostu ukryć gdzie indziej.
 “Ech, dobra. Chodźmy.”
-Sirone rozchylił płaszcz i przywołał Armana.
+Sirone rozchylił płaszcz i przywołał Armanda.
 Miecz przyleciał jak strzała i ułożył się przy jego pasie. To, że był krótszy niż długi miecz, ułatwiało ukrycie. Gdy narzucił płaszcz, z pochwy wystawał tylko czubek. Na pierwszy rzut oka nawet nie było widać, że ma miecz.
-Gdy fale psychiczne Armana zniknęły, Sirone potrząsnął głową i wyszedł z pokoju. Skoro tyle demonicznych mieczy zabijało swoich właścicieli, musiał potraktować to jako drobną fanaberię.
+Gdy fale psychiczne Armanda zniknęły, Sirone potrząsnął głową i wyszedł z pokoju. Skoro tyle demonicznych mieczy zabijało swoich właścicieli, musiał potraktować to jako drobną fanaberię.
+
 * * *
+
 Królestwo Tormia.
 Stolica Bashka i znajdujące się tam Stowarzyszenie Magii.
 Dzielnica Alog była rejonem, w którym nawet w stolicy skupiały się najważniejsze instytucje, a gdy przechodziło się tędy w samo południe, każdy marszczył brwi. Zbyt wiele wieżowców odbijało światło słońca.

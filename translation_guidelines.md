@@ -22,6 +22,8 @@ Słownictwo:
 Spójność:
 - Konsekwentnie zapisywać imiona, nazwy własne i terminy.
 - Jeśli pojawia się nowy termin, dopisać go do glosariusza.
+- Pilnować zgodności płci postaci w narracji i dialogach (zaimki, formy czasowników, imiesłowy).
+- Nie zmieniać płci postaci względem kontekstu fabularnego i ustalonej mapy postaci.
 
 Format:
 - Zachowujemy oryginalny podział na akapity i sceny.
@@ -34,3 +36,6 @@ Kontrola jakości:
 - Po tłumaczeniu szybki przegląd pod kątem płynności i logiki.
 - Usunąć kalki typu „to jest…”, „nie naga emocja”, „bieg historii”, jeśli brzmią sztucznie.
 - Sprawdzić konsekwencję w zapisie zaklęć i nazw własnych.
+- Nie generować metadanych typu [TITLE] ani [NUM] w treści rozdziału.
+- Pierwsza linia ma być wyłącznie w formacie: [NUM] Polski tytuł.
+- Przy wykryciu błędów formatu najpierw poprawić format, potem dopiero redagować styl.
