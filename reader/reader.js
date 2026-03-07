@@ -70,7 +70,8 @@ function loadSettings() {
     lineHeight: 1.6,
     contentWidth: 760,
     theme: 'sepia',
-    language: 'en'
+    language: 'en',
+    lastChapterByLanguage: {}
   };
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -83,6 +84,20 @@ function loadSettings() {
 
 function saveSettings(settings) {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+}
+
+function saveLastChapterForLanguage(num) {
+  try {
+    const settings = loadSettings();
+    const map = (settings.lastChapterByLanguage && typeof settings.lastChapterByLanguage === 'object')
+      ? settings.lastChapterByLanguage
+      : {};
+    map[currentLanguage] = num;
+    settings.lastChapterByLanguage = map;
+    saveSettings(settings);
+  } catch {
+    // ignore storage write errors
+  }
 }
 
 function buildSelect() {
@@ -179,6 +194,7 @@ async function loadChapter(index, updateSelect = true) {
     setStatus(`Gotowe: ${chapterLabel} ${ch.num}`);
     updateReadToggle();
     updateUrlHash();
+    saveLastChapterForLanguage(ch.num);
   } catch (err) {
     chapterTitle.textContent = 'Błąd ładowania';
     chapterText.textContent = 'Nie udało się wczytać pliku. Upewnij się, że uruchomiłeś lokalny serwer HTTP w katalogu z plikami.';
@@ -193,10 +209,16 @@ function updateUrlHash() {
   if (location.hash !== hash) history.replaceState(null, '', hash);
 }
 
-function getIndexFromHash() {
-  const n = parseInt(location.hash.replace('#', ''), 10);
+function getIndexFromHash(hashValue = location.hash) {
+  const n = parseInt(String(hashValue || '').replace('#', ''), 10);
   if (!Number.isFinite(n)) return 0;
   const idx = chapters.findIndex(c => c.num === n);
+  return idx >= 0 ? idx : 0;
+}
+
+function getIndexFromChapterNum(num) {
+  if (!Number.isFinite(num)) return 0;
+  const idx = chapters.findIndex(c => c.num === num);
   return idx >= 0 ? idx : 0;
 }
 
@@ -329,12 +351,21 @@ async function loadLanguage(lang, keepChapter = true) {
 
 async function init() {
   try {
+    const initialHash = location.hash;
     const settings = loadSettings();
     applySettings(settings);
     populateLanguageSelect();
     wireControls();
     await loadLanguage(settings.language || 'en', false);
-    const startIndex = getIndexFromHash();
+    let startIndex = 0;
+    if (initialHash) {
+      startIndex = getIndexFromHash(initialHash);
+    } else {
+      const remembered = settings.lastChapterByLanguage
+        ? settings.lastChapterByLanguage[settings.language || 'en']
+        : null;
+      startIndex = getIndexFromChapterNum(Number(remembered));
+    }
     if (startIndex !== currentIndex) await loadChapter(startIndex);
   } catch (err) {
     chapterTitle.textContent = 'Błąd inicjalizacji';

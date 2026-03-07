@@ -398,6 +398,22 @@ def validate_translation(text: str, src_text: str, num: int) -> List[str]:
     return issues
 
 
+def split_issues(issues: List[str]) -> tuple[list, list]:
+    critical_rules = (
+        "Pusty wynik",
+        "Brak poprawnego naglowka",
+        "Wynik zawiera linie [TITLE]",
+        "Wynik zawiera linie [NUM]",
+        "Wynik zawiera znaki Hangul",
+        "Za malo tresci po tlumaczeniu",
+        "Za duzo tresci po tlumaczeniu",
+        "Wykryto nadmiarowe puste linie",
+    )
+    critical = [issue for issue in issues if issue.startswith(critical_rules)]
+    non_critical = [issue for issue in issues if issue not in critical]
+    return critical, non_critical
+
+
 def parse_title(text: str, num: int, fallback: str) -> str:
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     for line in lines[:6]:
@@ -478,10 +494,14 @@ def repair_existing_range(start: int, end: int):
         title = parse_title(text, num, str(entry.get("title") or f"Rozdzial {num}"))
         repaired = postprocess_translation(text, src_text, num, title)
         issues = validate_translation(repaired, src_text, num)
+        critical, non_critical = split_issues(issues)
+        if critical:
+            print(f"Pominieto {num}: krytyczne problemy po naprawie: {'; '.join(critical)}")
+            continue
         path.write_text(repaired, encoding='utf-8')
         entry["title"] = title
-        if issues:
-            print(f"Naprawiono {num} z ostrzezeniami: {'; '.join(issues)}")
+        if non_critical:
+            print(f"Naprawiono {num} z ostrzezeniami: {'; '.join(non_critical)}")
         else:
             print(f"Naprawiono {num}")
 
@@ -555,8 +575,12 @@ def main():
             translated = postprocess_translation(repaired, src_text, num, title)
             issues = validate_translation(translated, src_text, num)
 
-        if issues:
-            print(f"Uwaga {num}: pozostale problemy po naprawie: {'; '.join(issues)}")
+        critical, non_critical = split_issues(issues)
+        if critical:
+            print(f"Blad {num}: krytyczne problemy po naprawie: {'; '.join(critical)}. Rozdzial nie zostal zapisany.")
+            continue
+        if non_critical:
+            print(f"Uwaga {num}: pozostale ostrzezenia po naprawie: {'; '.join(non_critical)}")
 
         file_name = save_translation(num, title, translated)
         update_progress(num, file_name, title)
