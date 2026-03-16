@@ -30,7 +30,28 @@ TERM_CANONICAL_MAP = {
     "Nefilim": "Nephilim",
     "Arman": "Armand",
     "Armana": "Armanda",
+    "Iruuki": "Iruki",
+    "Alpheas": "Alfeas",
+    "Akademia Magii Alfeas": "Szkoła Magii Alfeas",
+    "Alfeas School of Magic": "Szkoła Magii Alfeas",
 }
+GLOSSARY_CANONICAL_MAP = {}
+
+REGEX_CANONICAL_RULES = [
+    (r"\bAka(?:shic|shik)\s+Record(?:s)?\b", "Akasha / Akashic Records"),
+    (r"\bAkasha\s+Record(?:s)?\b", "Akasha / Akashic Records"),
+    (r"\bAka(?:shic|shik)\b", "Akasha / Akashic Records"),
+    (r"\bAlpheas\b", "Alfeas"),
+    (r"\bAlfeas[aieąę]?\b", "Alfeas"),
+    (r"\bAkademi[ai]\s+Magii\s+Alfeas[aieąę]?\b", "Szkoła Magii Alfeas"),
+    (r"\bNefilim(?:ów|om|ami|ie|a|y)?\b", "Nephilim"),
+    (r"\bNephilim(?:ów|om|ami|ie|a|y)?\b", "Nephilim"),
+    (r"\bIruuki\b", "Iruki"),
+    (r"\bArman\b", "Armand"),
+    (r"\bArmana\b", "Armanda"),
+    (r"\bKarel\b", "Kariel"),
+    (r"\bIchael\b", "Ikael"),
+]
 
 MAX_REPAIR_ATTEMPTS = 2
 
@@ -82,6 +103,25 @@ def find_src_file(num: int):
 
 def load_text(path: Path):
     return path.read_text(encoding='utf-8')
+
+
+def parse_glossary_canonical_map(glossary_text: str) -> dict:
+    mapping = {}
+    for raw_line in glossary_text.splitlines():
+        line = raw_line.strip()
+        if not line.startswith("- ") or "->" not in line:
+            continue
+        left, right = line[2:].split("->", 1)
+        alias = left.strip()
+        canonical = right.strip()
+        if not alias or not canonical:
+            continue
+        # Remove helper qualifiers like "(spell)" from aliases.
+        alias = re.sub(r"\s*\([^)]*\)\s*$", "", alias).strip()
+        if not alias or alias == canonical:
+            continue
+        mapping[alias] = canonical
+    return mapping
 
 
 def build_gender_rules_text() -> str:
@@ -227,8 +267,13 @@ def replace_hangul(text: str) -> str:
 
 
 def canonicalize_terms(text: str) -> str:
-    for src, dst in TERM_CANONICAL_MAP.items():
-        text = re.sub(rf"\b{re.escape(src)}\b", dst, text)
+    for pattern, replacement in REGEX_CANONICAL_RULES:
+        text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
+    unified = {**GLOSSARY_CANONICAL_MAP, **TERM_CANONICAL_MAP}
+    # Replace longer aliases first to avoid partial overlaps.
+    for src in sorted(unified.keys(), key=len, reverse=True):
+        dst = unified[src]
+        text = re.sub(rf"(?<!\w){re.escape(src)}(?!\w)", dst, text, flags=re.IGNORECASE)
     return text
 
 
@@ -461,6 +506,10 @@ def load_progress_data() -> List[dict]:
 
 
 def repair_existing_range(start: int, end: int):
+    global GLOSSARY_CANONICAL_MAP
+    glossary_text = load_text(GLOSSARY) if GLOSSARY.exists() else ""
+    GLOSSARY_CANONICAL_MAP = parse_glossary_canonical_map(glossary_text)
+
     data = load_progress_data()
     by_num = {
         entry.get("num"): entry
@@ -528,6 +577,8 @@ def main():
     last = get_last_translated_num()
     glossary = load_text(GLOSSARY) if GLOSSARY.exists() else ""
     guidelines = load_text(GUIDELINES) if GUIDELINES.exists() else ""
+    global GLOSSARY_CANONICAL_MAP
+    GLOSSARY_CANONICAL_MAP = parse_glossary_canonical_map(glossary)
 
     for num in range(last + 1, target + 1):
         src = find_src_file(num)

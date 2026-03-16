@@ -1,5 +1,4 @@
 [360] Stowarzyszenie Magów (6) 1
-[360] Stowarzyszenie Magów (6)
 Sirone wsiadł do powozu jadącego do Stowarzyszenia Magów. Wciąż pulsowała mu głowa po tylu kuksańcach.
 Gdy przyciskał do piersi metalowe pudełko i dąsał usta, Plu parsknęła śmiechem.
 “Co? Obraziłeś się, że cię uderzyłam? Sam wpakowałeś się na miejsce bez pozwolenia. Wiesz, jaka to sprawa? Użycie magii bez licencji to złamanie prawa królestwa.”
@@ -26,7 +25,9 @@ Brzmiało to całkiem możliwie.
 Ladum to obszar, gdzie mieszały się liczne rasy uciekinierów z kontynentu. Gdyby dało się przeprowadzać eksperymenty biologiczne, lepszego miejsca by nie było.
 Sirone odwrócił głowę ku oknu. Widok stolicy był tak samo wspaniały jak przy pierwszej wizycie, tylko teraz dostrzegał w nim cień.
 Światło i mrok. To także prawo, które istnieje, bo jedno nazywa drugie. Ale Sirone nie wiedział, co było pierwsze.
+
 * * *
+
 Plu, przekroczywszy bramę Stowarzyszenia Magów, odwróciła się do Sirone.
 “Ja idę złożyć raport, a ty idź do maszynowni i przekaż to ekipie konserwacyjnej. I ani kroku stamtąd! Nie włócz się nigdzie!”
 Poza posłańcami Sirone nigdzie się nie włóczył. Ale teraz tylko wzruszył ramionami i ruszył, ostrożnie, bo bał się, że sprzęt mógł się uszkodzić.

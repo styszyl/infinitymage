@@ -1,5 +1,4 @@
 [370] Specjalny trening (5) 1
-[370] Specjalny trening (5)
 Flu znów przeszukał skrzynie ze sprzętem i oburącz wyjął ciężkiego drona.
 Ponieważ latał dzięki magnetyzmowi sprzężonemu z poligonem, tor miał gwałtowne zmiany, idealne do prób naprowadzania.
 “Zacznijmy od etapu pierwszego. Oswój zmysły.”
@@ -48,7 +47,9 @@ Ich spojrzenia zderzyły się tylko na chwilę, po czym obaj bez słowa pobiegli
 “Sukces! Udało się, starszy!”
 “Świetnie! Gdybyśmy zawalili, miałbym potworne poczucie niesmaku! Wreszcie jestem wolny!”
 Okrzyki dwójki, która w emocjach straciła rozsądek, rozbrzmiały na poligonie. Tylko jeden zgnieciony dron patrzył na nich jakby z politowaniem.
+
 * * *
+
 Nadeszła ostatnia noc w Magicznym Stowarzyszeniu.
 Sirone, wezwany przez Flu, ruszył do poczekalni na pierwszym piętrze.
 Pusty korytarz, w kontraście do dziennego zgiełku, miał w sobie coś samotnego.

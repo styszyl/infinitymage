@@ -1,5 +1,4 @@
 [371] Stalowe Wrota (1) 2
-[371] Stalowe Wrota (1)
 Nadszedł dzień rozpoczęcia roku w szkole magii.
 Sirone wstał o świcie, złożył kołdrę i spakował rzeczy.
 Kubrik był wygodny także w codziennym życiu. Rozdzielił różne drobiazgi na sześć slotów, a Miecz demoniczny Armand włożył osobno do jednego slotu. Na wypadek najgorszego.
@@ -24,7 +23,9 @@ Vincent, który skończył się myć, wycierał twarz ręcznikiem.
 “Przestań gadać głupoty i jedz.”
 “Tak jest.”
 Vincent wojskowym krokiem usiadł przy stole. Śmiech Sirone rozjaśnił kuchnię. Pragnął, by to szczęście trwało już zawsze.
+
 * * *
+
 Gdy przyjechali do szkoły powozem rodu Ogent, przed bramą główną kłębił się tłum.
 Właśnie zaczynał się nowy semestr, a rodzice nachylali się do swoich jeszcze niedorosłych dzieci i zasypywali je morałami.
 Kiedy rozległ się komunikat o rozpoczęciu ceremonii przyjęcia, wielu uczniów wyprzedziło Sirone.
@@ -68,7 +69,9 @@ Amy, nie wiadomo z czego tak rozbawiona, chichotała, oddalając się.
 Sirone, kręcąc głową jakby nie mógł jej powstrzymać, odwrócił się, a na jego ustach pojawił się uśmiech.
 “Tak, w końcu stoimy w tym samym miejscu.”
 Chyba rozumiał, dlaczego Amy jest w tak dobrym nastroju.
+
 * * *
+
 Koło Badawcze Nadnaturalnej Nauki Umysłu.
 Iruki, wpatrzony w tablicę pełną wzorów, pogrążony był w myślach.
 Wreszcie trafił do ostatniego rocznika. Ale szczerze mówiąc, wyszło tak, że po prostu tutaj dotarł.
