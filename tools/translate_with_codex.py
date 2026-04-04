@@ -225,12 +225,14 @@ def run_codex(prompt: str) -> str:
         if use_node:
             cmd = [
                 'node', codex_path, 'exec', '-',
+                '--model', 'gpt-5.4-mini',
                 '--output-last-message', out_path,
                 '--skip-git-repo-check'
             ]
         else:
             cmd = [
                 codex_path, 'exec', '-',
+                '--model', 'gpt-5.4-mini',
                 '--output-last-message', out_path,
                 '--skip-git-repo-check'
             ]
